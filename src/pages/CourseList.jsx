@@ -8,9 +8,9 @@ const CourseList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCouses = async () => {
+    const fetchCourses = async () => {
       try {
-        const snapshot = await getDocs(collection(db, "courses"));
+        const snapshot = await getDocs(collection(db, "course"));
         const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -18,26 +18,51 @@ const CourseList = () => {
         setCourses(data);
         setLoading(false);
       } catch (error) {
-        console.error("Error loading Courses");
+        console.error("Error loading courses:", error);
       }
     };
-    fetchCouses();
+
+    fetchCourses();
   }, []);
 
-  if (loading) return <p>Loading Courses</p>;
+  const getYoutubeThumbnail = (url) => {
+    try {
+      const videoId = new URL(url).searchParams.get("v");
+      return videoId
+        ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
+        : null;
+    } catch {
+      return null;
+    }
+  };
+
+  if (loading) return <p>Loading courses...</p>;
 
   return (
     <div>
-      <h2>ِall courses</h2>
-      <ul>
-        {courses.map((course) => (
-          <li key={course.id}>
-            <Link to={`/courses/${course.id}`}>
-              <h3>{course.title}</h3>
-              <p>{course.description}</p>
-            </Link>
-          </li>
-        ))}
+      <h2>All Courses</h2>
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {courses.map((course) => {
+          const thumbnail = getYoutubeThumbnail(course.videoUrl);
+          return (
+            <li key={course.id} style={{ marginBottom: "20px" }}>
+              <Link
+                to={`/courses/${course.id}`}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                {thumbnail && (
+                  <img
+                    src={thumbnail}
+                    alt="Course thumbnail"
+                    style={{ width: "200px", height: "auto", display: "block" }}
+                  />
+                )}
+                <h3>{course.title}</h3>
+                <p>{course.description}</p>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

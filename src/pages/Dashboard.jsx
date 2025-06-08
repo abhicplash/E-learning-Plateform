@@ -1,17 +1,21 @@
 import React from "react";
-import { auth } from "../services/firebase";
-import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    auth.signOut();
-    navigate("/login");
-  };
   return (
-    <div>
-      <h1>welcome to dash board</h1>
-      <button onClick={handleLogout}>logout</button>
+    <div style={{ padding: "2rem" }}>
+      <h2>Welcome to Your Dashboard</h2>
+      <section>
+        <h3>Your Enrolled Courses</h3>
+        {/* Map through enrolled courses */}
+        <p>
+          No enrollments yet. <a href="/courses">Browse Courses</a>
+        </p>
+      </section>
+
+      <section>
+        <h3>Learning Progress</h3>
+        {/* Show progress bars (optional for now) */}
+      </section>
     </div>
   );
 };
