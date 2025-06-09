@@ -1,7 +1,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../services/firebase";
+import "../styles/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,9 +20,14 @@ const Login = () => {
     }
   };
   return (
-    <div>
-      <h2>login</h2>
-      <form action="" onSubmit={handleLogin}>
+    <div className="login-wrapper">
+      <form action="" onSubmit={handleLogin} className="auth-form">
+        <h2>login</h2>
+        {error && (
+          <p style={{ color: "red" }} className="auth-error">
+            {error}
+          </p>
+        )}
         <input
           type="email"
           value={email}
@@ -42,7 +48,9 @@ const Login = () => {
         <br />
         <button type="submit">Login</button>
       </form>{" "}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <p>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
+      </p>
     </div>
   );
 };

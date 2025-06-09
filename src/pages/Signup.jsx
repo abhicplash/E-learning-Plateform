@@ -1,8 +1,9 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../services/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import "../styles/Login.css";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -23,8 +24,8 @@ const Signup = () => {
       // Create user document in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
-        enrollments: [], // initialize with empty course enrollment list
-        progress: {}, // initialize empty progress tracking object
+        enrollments: [],
+        progress: {},
       });
 
       navigate("/dashboard");
@@ -34,9 +35,10 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Sign up</h2>
-      <form onSubmit={handleSignup}>
+    <div className="login-wrapper">
+      <form onSubmit={handleSignup} className="auth-form ">
+        <h2>Sign up</h2>
+        {error && <p className="auth-error">{error}</p>}
         <input
           type="text"
           placeholder="Email"
@@ -55,7 +57,9 @@ const Signup = () => {
         <br />
         <button type="submit">Sign up</button>
       </form>
-      {error && <p>{error}</p>}
+      <p>
+        Don't have an account? <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 };
