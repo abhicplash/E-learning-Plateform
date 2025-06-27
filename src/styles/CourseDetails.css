@@ -1,0 +1,64 @@
+.course-details-wrapper {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  color: #003254;
+}
+
+.course-header {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.course-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.course-header button {
+  margin-top: 1rem;
+  background-color: var(--blue);
+  color: white;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.course-header button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.video-section {
+  margin: 2rem 0;
+}
+
+.lessons-section {
+  margin-top: 2rem;
+}
+
+.lesson-card {
+  background: #f9f9f9;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.lesson-card button {
+  margin-top: 1rem;
+  background: var(--secondary);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+}
+
+.enroll-note {
+  color: crimson;
+  font-weight: 500;
+}

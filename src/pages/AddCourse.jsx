@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
+import "../styles/AddCourse.css";
 
 const AddCourse = () => {
   const [form, setForm] = useState({
@@ -54,9 +55,10 @@ const AddCourse = () => {
   if (!isAdmin) return <p>Access denied. Admins only.</p>;
 
   return (
-    <div>
+    <div className="add-course-wrapper">
       <h2>Add New Course</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="add-course-form" onSubmit={handleSubmit}>
+        <label htmlFor="title">Title</label>
         <input
           name="title"
           placeholder="Title"
@@ -64,6 +66,8 @@ const AddCourse = () => {
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="description">Description</label>
         <textarea
           name="description"
           placeholder="Description"
@@ -71,6 +75,8 @@ const AddCourse = () => {
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="instructor">Instructor</label>
         <input
           name="instructor"
           placeholder="Instructor"
@@ -78,6 +84,8 @@ const AddCourse = () => {
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="price">Price</label>
         <input
           name="price"
           placeholder="Price"
@@ -85,13 +93,16 @@ const AddCourse = () => {
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="videoUrl">YouTube Video URL</label>
         <input
           name="videoUrl"
-          placeholder="YouTube Video URL"
+          placeholder="Video URL"
           value={form.videoUrl}
           onChange={handleChange}
           required
         />
+
         <button type="submit">Add Course</button>
       </form>
     </div>

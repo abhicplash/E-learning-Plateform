@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../services/firebase";
+import { useAuth } from "../features/AuthContext"; // Make sure this returns { user }
 import "../styles/Login.css";
 
 const Login = () => {
@@ -10,21 +11,31 @@ const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const { user } = useAuth();
+
+  // 🔐 Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
+
   return (
     <div className="login-wrapper">
-      <form action="" onSubmit={handleLogin} className="auth-form">
-        <h2>login</h2>
+      <form onSubmit={handleLogin} className="auth-form">
+        <h2>Login</h2>
         {error && (
-          <p style={{ color: "red" }} className="auth-error">
+          <p className="auth-error" style={{ color: "red" }}>
             {error}
           </p>
         )}
@@ -40,14 +51,12 @@ const Login = () => {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <br />
         <button type="submit">Login</button>
-      </form>{" "}
+      </form>
       <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>

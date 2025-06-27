@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { Link } from "react-router-dom";
+import "../styles/CourseList.css";
+import Layout from "../components/Layout";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -39,32 +41,28 @@ const CourseList = () => {
   if (loading) return <p>Loading courses...</p>;
 
   return (
-    <div>
-      <h2>All Courses</h2>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {courses.map((course) => {
-          const thumbnail = getYoutubeThumbnail(course.videoUrl);
-          return (
-            <li key={course.id} style={{ marginBottom: "20px" }}>
-              <Link
-                to={`/courses/${course.id}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                {thumbnail && (
-                  <img
-                    src={thumbnail}
-                    alt="Course thumbnail"
-                    style={{ width: "200px", height: "auto", display: "block" }}
-                  />
-                )}
-                <h3>{course.title}</h3>
-                <p>{course.description}</p>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <Layout>
+      <div className="CourseList-wrapper">
+        <h2>All Courses</h2>
+        <ul className="course-container">
+          {courses.map((course) => {
+            const thumbnail = getYoutubeThumbnail(course.videoUrl);
+            return (
+              <li key={course.id} className="course-wrapper">
+                {thumbnail && <img src={thumbnail} alt="Course thumbnail" />}
+                <div className="course-info">
+                  <h3>{course.title}</h3>
+                  <p>{course.description}</p>
+                  <Link to={`/courses/${course.id}`}>
+                    <button>watch</button>
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Layout>
   );
 };
 
